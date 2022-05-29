@@ -23,17 +23,23 @@ namespace Precept57
         {
             ModHooks.HeroUpdateHook += AddText;
         }
+        
+        private void OnDestroy()
+        {
+            ModHooks.HeroUpdateHook -= AddText;
+        }
 
         public void AddText()
         {
-            var canvas = CanvasUtil.CreateCanvas(RenderMode.ScreenSpaceOverlay, new Vector2(1920, 1080));
+            GameObject canvas = CanvasUtil.CreateCanvas(RenderMode.ScreenSpaceOverlay, new Vector2(2560, 1440));
+            Object.DontDestroyOnLoad(canvas);
             var rectSizeDelta = new Vector2(600, 600);
             var rectAnchorPosition = new Vector2(600, 600);
             var rectMin = new Vector2(0.5f, 0f);
             var rectMax = new Vector2(0.5f, 0f);
             var rectPivot = new Vector2(0.5f, 0.5f);
-            var rectData = new CanvasUtil.RectData(rectSizeDelta, rectAnchorPosition, rectMin, rectPivot);
-            var text = CanvasUtil.CreateTextPanel(canvas, "UP", 12, TextAnchor.UpperCenter, rectData, true)
+            var rectData = new CanvasUtil.RectData(rectSizeDelta, rectAnchorPosition, rectMin, rectMax, rectPivot);
+            CanvasUtil.CreateTextPanel(canvas, "UP", 48, TextAnchor.UpperCenter, rectData, true)
                 .GetComponent<Text>();
         }
     }

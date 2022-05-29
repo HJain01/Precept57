@@ -9,6 +9,11 @@ namespace Precept57
 {
     public class Precept57 : Mod
     {
+        private static readonly List<Precept> Precepts = new()
+        {
+            Precept35.Instance
+        };
+        
         internal static Precept57 Instance;
 
         //public override List<ValueTuple<string, string>> GetPreloadNames()
@@ -19,15 +24,22 @@ namespace Precept57
         //    };
         //}
 
-        //public Precept57() : base("Precept57")
-        //{
-        //    Instance = this;
-        //}
+        public Precept57() : base("Precept 57")
+        {
+            Instance = this;
+        }
+        
+        public override string GetVersion() => "v0.0.1";
 
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects) {
             Log("Initializing");
 
             Instance = this;
+
+            foreach (var precept in Precepts)
+            {
+                precept.Hook();
+            }
 
             Log("Initialized");
         }
