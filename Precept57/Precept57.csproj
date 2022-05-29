@@ -324,7 +324,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".gitignore" />
     <None Include="ReadMe.md" />
   </ItemGroup>
   <ItemGroup>
