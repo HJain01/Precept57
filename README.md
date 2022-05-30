@@ -74,7 +74,7 @@ Precepts
 
 **Precept Thirty-Four**: _Don't Eat Immediately Before Sleeping._ This can cause restlessness and indigestion. It's just common sense.
 
-[**Precept Thirty-Five**](PRECEPTS.md#precept35): _Up is Up, Down is Down._ If you fall over in the darkness, it can be easy to lose your bearing and forget which way is up. Keep this Precept in mind!
+[**Precept Thirty-Five**](PRECEPTS.md#precept-35): _Up is Up, Down is Down._ If you fall over in the darkness, it can be easy to lose your bearing and forget which way is up. Keep this Precept in mind!
 
 **Precept Thirty-Six**: _Eggshells are brittle._ Once again, this Precept explains itself.
 
