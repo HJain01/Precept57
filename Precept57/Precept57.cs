@@ -6,6 +6,7 @@ using UObject = UnityEngine.Object;
 using ItemChanger;
 using ItemChanger.Items;
 using ItemChanger.Locations;
+using ItemChanger.Tags;
 using ItemChanger.UIDefs;
 using SFCore;
 
@@ -49,7 +50,6 @@ namespace Precept57
                 
                 var item = new BoolItem() {
                     fieldName = precept.Id,
-                    setValue = false,
                     name = precept.Id,
                     UIDef = new MsgUIDef() { 
                         name = new LanguageString("UI", precept.Id),
@@ -57,11 +57,16 @@ namespace Precept57
                         sprite = new EmbeddedSprite() { key = precept.Sprite }
                     }
                 };
+                
+                var mapmodTag = item.AddTag<InteropTag>();
+                mapmodTag.Message = "PreceptSupplementalMetadata";
+                mapmodTag.Properties["ModSource"] = GetName();
+                mapmodTag.Properties["PoolGroup"] = "Items";
                 Finder.DefineCustomItem(item);
             }
             ModHooks.GetPlayerBoolHook += GetPreceptBools;
             ModHooks.SetPlayerBoolHook += SetPreceptBools;
-            ModHooks.SceneChanged += PlacePreceptsAtFixedPositions;
+            ModHooks.NewGameHook += PlacePreceptsAtFixedPositions;
 
             Log("Initialized Precept 57");
         }
@@ -84,7 +89,7 @@ namespace Precept57
             return orig;
         }
 
-        private void PlacePreceptsAtFixedPositions(string s)
+        private void PlacePreceptsAtFixedPositions()
         {
             ItemChangerMod.CreateSettingsProfile(overwrite: false, createDefaultModules: false);
 
@@ -93,7 +98,7 @@ namespace Precept57
             {
                 var name = precept.Id;
                 placements.Add(
-                    new CoordinateLocation() { x = precept.X, y = precept.Y, elevation = 10, sceneName = precept.Scene, name = name }
+                    new CoordinateLocation() { x = precept.X, y = precept.Y, elevation = 0, sceneName = precept.Scene, name = name }
                         .Wrap()
                         .Add(Finder.GetItem(name)));
             }

@@ -15,8 +15,8 @@ namespace Precept57
         public override string Id => "Precept_35";
         public override string Description => "Add UP and DOWN text to the top and bottom of the screen.";
         public override string Scene => "Tutorial_01"; //TODO: Figure out which scene to put it in
-        public override float X => 147.0f; //TODO: Figure out X coordinate in scene to put it at
-        public override float Y => 6.0f; //TODO: Figure out Y coordinate in scene to put it at
+        public override float X => 47.4f; //TODO: Figure out X coordinate in scene to put it at
+        public override float Y => 11.4f; //TODO: Figure out Y coordinate in scene to put it at
 
         public override PreceptSettings Settings(SaveSettings s) => s.Precept35;
 
@@ -24,19 +24,9 @@ namespace Precept57
         {
             ModHooks.HeroUpdateHook += AddText;
         }
-        
-        private void OnDestroy()
-        {
-            ModHooks.HeroUpdateHook -= AddText;
-        }
 
         public void AddText()
         {
-            if (HeroController.instance == null)
-            {
-                return;
-            }
-            
             AddUpText();
             AddDownText();
         }
