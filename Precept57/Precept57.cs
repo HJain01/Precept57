@@ -23,6 +23,8 @@ namespace Precept57
 
         private Dictionary<string, Func<bool, bool>> BoolGetters = new();
         private Dictionary<string, Action<bool>> BoolSetters = new();
+        private Dictionary<(string Key, string Sheet), Func<string>> TextEdits = new();
+
 
         public Precept57() : base("Precept 57")
         {
@@ -39,10 +41,9 @@ namespace Precept57
 
             foreach (var precept in Precepts)
             {
-                var sprite = EmbeddedSprites.Get(precept.Sprite);
-                ItemHelper.AddNormalItem(sprite, "false", precept.Id, precept.Description);
-
                 Func<SaveSettings, PreceptSettings> settings = precept.Settings;
+                AddTextEdit($"{precept.Id}_NAME", "UI", precept.Name);
+                AddTextEdit($"{precept.Id}_DESC", "UI", precept.Description);
                 BoolGetters[precept.Id] = _ => settings(saveSettings).Got;
                 BoolSetters[precept.Id] = value => settings(saveSettings).Got = value;
 
@@ -52,8 +53,8 @@ namespace Precept57
                     fieldName = precept.Id,
                     name = precept.Id,
                     UIDef = new MsgUIDef() { 
-                        name = new LanguageString("UI", precept.Id),
-                        shopDesc = new LanguageString("UI", precept.Description),
+                        name = new LanguageString("UI", $"{precept.Id}_NAME"),
+                        shopDesc = new LanguageString("UI", $"{precept.Id}_DESC"),
                         sprite = new EmbeddedSprite() { key = precept.Sprite }
                     }
                 };
@@ -67,6 +68,7 @@ namespace Precept57
             ModHooks.GetPlayerBoolHook += GetPreceptBools;
             ModHooks.SetPlayerBoolHook += SetPreceptBools;
             ModHooks.NewGameHook += PlacePreceptsAtFixedPositions;
+            ModHooks.LanguageGetHook += GetCharmStrings;
 
             Log("Initialized Precept 57");
         }
@@ -103,6 +105,20 @@ namespace Precept57
                         .Add(Finder.GetItem(name)));
             }
             ItemChangerMod.AddPlacements(placements, conflictResolution: PlacementConflictResolution.Ignore);
+        }
+        
+        private string GetCharmStrings(string key, string sheetTitle, string orig)
+        {
+            if (TextEdits.TryGetValue((key, sheetTitle), out var text))
+            {
+                return text();
+            }
+            return orig;
+        }
+        
+        internal void AddTextEdit(string key, string sheetName, string text)
+        {
+            TextEdits.Add((key, sheetName), () => text);
         }
         
         public void OnLoadLocal(SaveSettings s)
