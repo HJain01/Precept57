@@ -25,16 +25,18 @@ namespace Precept57
             ModHooks.HeroUpdateHook += AddText;
         }
 
-        public void AddText()
+        private void AddText()
         {
-            AddUpText();
-            AddDownText();
+            if (Equipped())
+            {
+                AddUpText();
+                AddDownText();
+            }
         }
 
         private static void AddUpText()
         {
             GameObject canvas = CanvasUtil.CreateCanvas(RenderMode.ScreenSpaceOverlay, new Vector2(Screen.width, Screen.height));
-            Object.DontDestroyOnLoad(canvas);
             var rectSizeDelta = new Vector2(100, 100);
             var rectAnchorPosition = new Vector2(0, Screen.height - 150);
             var rectMin = new Vector2(0.5f, 0f);
@@ -48,7 +50,6 @@ namespace Precept57
         private static void AddDownText()
         {
             GameObject canvas = CanvasUtil.CreateCanvas(RenderMode.ScreenSpaceOverlay, new Vector2(2560, 1440));
-            Object.DontDestroyOnLoad(canvas);
             var rectSizeDelta = new Vector2(200, 200);
             var rectAnchorPosition = new Vector2(0, 150);
             var rectMin = new Vector2(0.5f, 0f);
