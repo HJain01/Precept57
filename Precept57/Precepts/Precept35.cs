@@ -14,9 +14,9 @@ namespace Precept57
         public override string Name => "Precept 35";
         public override string Id => "Precept_35";
         public override string Description => "Add UP and DOWN text to the top and bottom of the screen.";
-        public override string Scene => "Crossroads_36"; //TODO: Figure out which scene to put it in
-        public override float X => 37.5f; //TODO: Figure out X coordinate in scene to put it at
-        public override float Y => 29.1f; //TODO: Figure out Y coordinate in scene to put it at
+        public override string Scene => "Crossroads_36";
+        public override float X => 37.5f;
+        public override float Y => 29.1f;
 
         public override PreceptSettings Settings(SaveSettings s) => s.Precept35;
 
