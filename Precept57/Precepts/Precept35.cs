@@ -14,9 +14,14 @@ namespace Precept57
         public override string Name => "Precept 35";
         public override string Id => "Precept_35";
         public override string Description => "Add UP and DOWN text to the top and bottom of the screen.";
-        public override string Scene => "Crossroads_36";
-        public override float X => 37.5f;
-        public override float Y => 29.1f;
+        public override string Take => "Following";
+        public override string Press => "Tap A";
+        public override string DescOne => "Up is Up, Down is Down";
+
+        public override string DescTwo => "UP and DOWN will be on the top and bottom of your screen so you can never forget";
+        public override string Scene => "Tutorial_01";
+        public override float X => 45.5f;
+        public override float Y => 11.4f;
 
         public override PreceptSettings Settings(SaveSettings s) => s.Precept35;
 

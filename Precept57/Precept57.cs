@@ -8,7 +8,6 @@ using ItemChanger.Items;
 using ItemChanger.Locations;
 using ItemChanger.Tags;
 using ItemChanger.UIDefs;
-using SFCore;
 
 namespace Precept57
 {
@@ -41,38 +40,73 @@ namespace Precept57
 
             foreach (var precept in Precepts)
             {
+                EmbeddedSprite sprite = new EmbeddedSprite() { key = precept.Sprite };
+
                 Func<SaveSettings, PreceptSettings> settings = precept.Settings;
-                AddTextEdit($"{precept.Id}_NAME", "UI", precept.Name);
-                AddTextEdit($"{precept.Id}_DESC", "UI", precept.Description);
-                BoolGetters[precept.Id] = _ => settings(saveSettings).Got;
-                BoolSetters[precept.Id] = value => settings(saveSettings).Got = value;
+                PopulateBoolAndTextDict(precept, settings);
 
                 precept.Hook();
                 
-                var item = new BoolItem() {
-                    fieldName = precept.Id,
-                    name = precept.Id,
-                    UIDef = new MsgUIDef() { 
-                        name = new LanguageString("UI", $"{precept.Id}_NAME"),
-                        shopDesc = new LanguageString("UI", $"{precept.Id}_DESC"),
-                        sprite = new EmbeddedSprite() { key = precept.Sprite }
-                    }
-                };
-                
-                var mapmodTag = item.AddTag<InteropTag>();
-                mapmodTag.Message = "PreceptSupplementalMetadata";
-                mapmodTag.Properties["ModSource"] = GetName();
-                mapmodTag.Properties["PoolGroup"] = "Items";
-                Finder.DefineCustomItem(item);
+                var preceptItem = DefinePrecept(precept, sprite);
+                ConfigureMapMod(preceptItem);
             }
-            ModHooks.GetPlayerBoolHook += GetPreceptBools;
-            ModHooks.SetPlayerBoolHook += SetPreceptBools;
-            ModHooks.NewGameHook += PlacePreceptsAtFixedPositions;
-            ModHooks.LanguageGetHook += GetCharmStrings;
+            DefineModHooks();
 
             Log("Initialized Precept 57");
         }
         
+        private void DefineModHooks()
+        {
+            ModHooks.GetPlayerBoolHook += GetPreceptBools;
+            ModHooks.SetPlayerBoolHook += SetPreceptBools;
+            ModHooks.NewGameHook += PlacePreceptsAtFixedPositions;
+            ModHooks.LanguageGetHook += GetCharmStrings;
+        }
+
+        private BoolItem DefinePrecept(Precept precept, EmbeddedSprite sprite)
+        {
+            var item = new BoolItem()
+            {
+                fieldName = precept.Id,
+                name = precept.Id,
+                UIDef = new BigUIDef()
+                {
+                    bigSprite = sprite,
+                    take = new LanguageString("UI", $"{precept.Id}_TAKE"),
+                    press = new LanguageString("UI", $"{precept.Id}_PRESS"),
+                    descOne = new LanguageString("UI", $"{precept.Id}_DESC_ONE"),
+                    descTwo = new LanguageString("UI", $"{precept.Id}_DESC_TWO"),
+                    name = new LanguageString("UI", $"{precept.Id}_NAME"),
+                    shopDesc = new LanguageString("UI", $"{precept.Id}_DESC"),
+                    sprite = sprite
+                }
+            };
+
+            Finder.DefineCustomItem(item);
+
+            return item;
+        }
+
+        private void ConfigureMapMod(BoolItem item)
+        {
+            var mapmodTag = item.AddTag<InteropTag>();
+            mapmodTag.Message = "PreceptSupplementalMetadata";
+            mapmodTag.Properties["ModSource"] = GetName();
+            mapmodTag.Properties["PoolGroup"] = "Items";
+        }
+
+        private void PopulateBoolAndTextDict(Precept precept, Func<SaveSettings, PreceptSettings> settings)
+        {
+            AddTextEdit($"{precept.Id}_NAME", "UI", precept.Name);
+            AddTextEdit($"{precept.Id}_DESC", "UI", precept.Description);
+            AddTextEdit($"{precept.Id}_TAKE", "UI", precept.Take);
+            AddTextEdit($"{precept.Id}_PRESS", "UI", precept.Press);
+            AddTextEdit($"{precept.Id}_DESC_ONE", "UI", precept.DescOne);
+            AddTextEdit($"{precept.Id}_DESC_TWO", "UI", precept.DescTwo);
+            BoolGetters[precept.Id] = _ => settings(saveSettings).Got;
+            BoolSetters[precept.Id] = value => settings(saveSettings).Got = value;
+        }
+
         private bool GetPreceptBools(string name, bool orig)
         {
             if (BoolGetters.TryGetValue(name, out var f))
