@@ -47,7 +47,7 @@ namespace Precept57
 
                 precept.Hook();
                 
-                var preceptItem = DefinePrecept(precept, sprite);
+                var preceptItem = CreatePrecept(precept, sprite);
                 ConfigureMapMod(preceptItem);
             }
             DefineModHooks();
@@ -63,7 +63,7 @@ namespace Precept57
             ModHooks.LanguageGetHook += GetCharmStrings;
         }
 
-        private BoolItem DefinePrecept(Precept precept, EmbeddedSprite sprite)
+        private BoolItem CreatePrecept(Precept precept, EmbeddedSprite sprite)
         {
             var item = new BoolItem()
             {
@@ -101,7 +101,7 @@ namespace Precept57
             AddTextEdit($"{precept.Id}_DESC", "UI", precept.Description);
             AddTextEdit($"{precept.Id}_TAKE", "UI", precept.Take);
             AddTextEdit($"{precept.Id}_PRESS", "UI", precept.Press);
-            AddTextEdit($"{precept.Id}_DESC_ONE", "UI", precept.DescOne);
+            AddTextEdit($"{precept.Id}_DESC_ONE", "UI", $"\"{precept.DescOne}\"");
             AddTextEdit($"{precept.Id}_DESC_TWO", "UI", precept.DescTwo);
             BoolGetters[precept.Id] = _ => settings(saveSettings).Got;
             BoolSetters[precept.Id] = value => settings(saveSettings).Got = value;

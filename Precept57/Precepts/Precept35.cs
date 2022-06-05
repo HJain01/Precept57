@@ -18,7 +18,7 @@ namespace Precept57
         public override string Press => "Tap A";
         public override string DescOne => "Up is Up, Down is Down";
 
-        public override string DescTwo => "UP and DOWN will be on the top and bottom of your screen so you can never forget";
+        public override string DescTwo => "No matter how turned around you get, you'll know where is up and where is down";
         public override string Scene => "Crossroads_36";
         public override float X => 37.5f;
         public override float Y => 29.1f;
