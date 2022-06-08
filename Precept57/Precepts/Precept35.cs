@@ -54,7 +54,7 @@ namespace Precept57
         
         private static void AddDownText()
         {
-            GameObject canvas = CanvasUtil.CreateCanvas(RenderMode.ScreenSpaceOverlay, new Vector2(2560, 1440));
+            GameObject canvas = CanvasUtil.CreateCanvas(RenderMode.ScreenSpaceOverlay, new Vector2(Screen.width, Screen.height));
             var rectSizeDelta = new Vector2(200, 200);
             var rectAnchorPosition = new Vector2(0, 150);
             var rectMin = new Vector2(0.5f, 0f);
