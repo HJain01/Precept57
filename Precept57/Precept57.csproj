@@ -30,6 +30,16 @@
     <Copy Condition="'$(DocumentationFile)' == ''" SourceFiles="$(TargetPath);$(TargetDir)/$(TargetName).pdb" DestinationFolder="$(HollowKnightRefs)/Mods/$(TargetName)/" />
 
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ExportDir)/$(TargetName)/" />
+
+    <ItemGroup>
+      <_DeleteImageItems Include="$(HollowKnightRefs)\Mods/$(TargetName)\*.png" />
+    </ItemGroup>
+    <Delete Files="@(_DeleteImageItems)" />
+    
+    <ItemGroup>
+      <_CopyImageItems Include="$(SolutionDir)\Precept57\Resources\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_CopyImageItems)" DestinationFolder="$(HollowKnightRefs)/Mods/$(TargetName)/" />
     
     <Copy Condition="'$(DocumentationFile)' != ''" SourceFiles="ReadMe.md;$(TargetPath);$(TargetDir)/$(TargetName).pdb;$(TargetDir)/$(TargetName).xml" DestinationFolder="$(ExportDir)/$(TargetName)/zip/" />
     <Copy Condition="'$(DocumentationFile)' == ''" SourceFiles="ReadMe.md;$(TargetPath);$(TargetDir)/$(TargetName).pdb" DestinationFolder="$(ExportDir)/$(TargetName)/zip/" />
