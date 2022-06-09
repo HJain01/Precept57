@@ -40,10 +40,10 @@ namespace Precept57
 
             foreach (var precept in Precepts)
             {
-                EmbeddedSprite sprite = new EmbeddedSprite() { key = precept.Sprite };
+                EmbeddedSprite sprite = precept.Sprite;
 
                 Func<SaveSettings, PreceptSettings> settings = precept.Settings;
-                PopulateBoolAndTextDict(precept, settings);
+                PopulateHookDictionaries(precept, settings);
 
                 precept.Hook();
                 
@@ -95,10 +95,10 @@ namespace Precept57
             mapmodTag.Properties["PoolGroup"] = "Items";
         }
 
-        private void PopulateBoolAndTextDict(Precept precept, Func<SaveSettings, PreceptSettings> settings)
+        private void PopulateHookDictionaries(Precept precept, Func<SaveSettings, PreceptSettings> settings)
         {
             AddTextEdit($"{precept.Id}_NAME", "UI", precept.Name);
-            AddTextEdit($"{precept.Id}_DESC", "UI", precept.Description);
+            AddTextEdit($"{precept.Id}_DESC", "UI", precept.ShopDescription);
             AddTextEdit($"{precept.Id}_TAKE", "UI", precept.Take);
             AddTextEdit($"{precept.Id}_PRESS", "UI", precept.Press);
             AddTextEdit($"{precept.Id}_DESC_ONE", "UI", $"\"{precept.DescOne}\"");

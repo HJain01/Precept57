@@ -1,11 +1,13 @@
-﻿namespace Precept57
+﻿using Modding;
+namespace Precept57
 {
-    internal abstract class Precept
+    internal abstract class Precept : Loggable
     {
-        public abstract string Sprite { get; }
+        public abstract string SpriteFileName { get; }
+        public EmbeddedSprite Sprite => new() {key = SpriteFileName};
         public abstract string Name { get; }
         public abstract string Id { get; }
-        public abstract string Description { get; }
+        public abstract string ShopDescription { get; }
         public abstract string Take { get; }
         public abstract string Press { get; }
         public abstract string DescOne { get; }

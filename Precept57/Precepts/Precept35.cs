@@ -10,10 +10,10 @@ namespace Precept57
 
         private Precept35() {}
 
-        public override string Sprite => "Precept35.png";
+        public override string SpriteFileName => "Precept35.png";
         public override string Name => "Precept 35";
         public override string Id => "Precept_35";
-        public override string Description => "Add UP and DOWN text to the top and bottom of the screen.";
+        public override string ShopDescription => "Add UP and DOWN text to the top and bottom of the screen.";
         public override string Take => "Following";
         public override string Press => "Tap A";
         public override string DescOne => "Up is Up, Down is Down";
