@@ -27,7 +27,6 @@ namespace Precept57
 
         public Precept57() : base("Precept 57")
         {
-            // Instance = this;
         }
         
         public override string GetVersion() => "0.0.1";
