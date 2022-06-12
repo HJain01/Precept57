@@ -15,7 +15,8 @@ namespace Precept57
     {
         private static readonly List<Precept> Precepts = new()
         {
-            Precept35.Instance
+            Precept35.Instance,
+            Precept38.Instance,
         };
         
         private static Precept57 Instance;
@@ -39,6 +40,7 @@ namespace Precept57
 
             foreach (var precept in Precepts)
             {
+                Log("Added " + precept.Name);
                 EmbeddedSprite sprite = precept.Sprite;
 
                 Func<SaveSettings, PreceptSettings> settings = precept.Settings;
