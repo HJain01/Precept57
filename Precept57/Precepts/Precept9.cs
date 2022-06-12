@@ -28,13 +28,13 @@ namespace Precept57
 
         public override string DescOne => "Keep Your Home Tidy";
 
-        public override string DescTwo => "Littering is bad. Always clean up after yourself.";
+        public override string DescTwo => "Littering is bad. You'll be charged for all uncollected geo.";
 
-        public override string Scene => "Tutorial_01";
+        public override string Scene => "GG_Waterways";
 
-        public override float X => 45.5f;
+        public override float X => 61.0f;
 
-        public override float Y => 11.4f;
+        public override float Y => 12.4f;
 
         public override PreceptSettings Settings(SaveSettings s) => s.Precept9;
 
