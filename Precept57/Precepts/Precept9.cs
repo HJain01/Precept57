@@ -38,9 +38,12 @@ namespace Precept57
 
         public override PreceptSettings Settings(SaveSettings s) => s.Precept9;
 
+        private int tax;
+
         public override void Hook()
         {
-            ModHooks.BeforeSceneLoadHook += ApplyLitterTax;
+            ModHooks.BeforeSceneLoadHook += CalculateLitterTax;
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += ApplyLitterTax;
         }
 
         private int numActiveGeo(string geoObjName)
@@ -52,17 +55,28 @@ namespace Precept57
             return geos.Length;
         }
 
-        private string ApplyLitterTax(string new_scene)
+        private string CalculateLitterTax(string new_scene)
         {
             if (Equipped())
             {
                 int numSmallGeos = numActiveGeo("Geo Small(Clone)");
                 int numMediumGeos = numActiveGeo("Geo Med(Clone)");
                 int numLargeGeos = numActiveGeo("Geo Large(Clone)");
-                int tax = numSmallGeos + 5 * numMediumGeos + 25 * numLargeGeos;
+                tax = numSmallGeos + 5 * numMediumGeos + 25 * numLargeGeos;
                 Log($"LITTER TAX: {tax}");
+                
             }
             return new_scene;
+        }
+
+        private void ApplyLitterTax(Scene prevScene, Scene newScene)
+        {
+            if (Equipped() && tax > 0)
+            {
+                int player_geo = PlayerData.instance.GetInt("geo");
+                ItemChanger.GeoCost cost = new(tax < player_geo ? tax : player_geo);
+                cost.OnPay();
+            }
         }
     }
 }

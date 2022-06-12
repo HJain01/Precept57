@@ -30,7 +30,7 @@ namespace Precept57
         {
         }
         
-        public override string GetVersion() => "0.0.1";
+        public override string GetVersion() => "0.0.2";
 
         private SaveSettings saveSettings = new();
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects) {
