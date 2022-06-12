@@ -28,7 +28,7 @@ namespace Precept57
 
         public override string DescOne => "Keep Your Home Tidy";
 
-        public override string DescTwo => "Littering is bad. You'll be charged for all uncollected geo.";
+        public override string DescTwo => "Littering is bad. You'll be charged for all uncollected geo when leaving an area.";
 
         public override string Scene => "GG_Waterways";
 

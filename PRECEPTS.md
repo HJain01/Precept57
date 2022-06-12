@@ -7,6 +7,12 @@ TODO: Finish adding all the precepts and modifications
 > *text of precept*
 
 What the precept does
+### Precept 9
+
+> _Keep Your Home Tidy._ Your home is where you keep your most prized possession - yourself. Therefore, you should make an effort to keep it nice and clean.
+
+Littering is bad. You'll be charged for all uncollected geo when leaving an area.
+
 
 ### Precept 35
 

@@ -22,7 +22,7 @@ Precepts
 
 **Precept Eight**: _Travel Alone._ You can rely on nobody, and nobody will always be loyal. Therefore, nobody should be your constant companion.
 
-**Precept Nine**: _Keep Your Home Tidy._ Your home is where you keep your most prized possession - yourself. Therefore, you should make an effort to keep it nice and clean.
+[**Precept Nine**](PRECEPTS.md#precept-9): _Keep Your Home Tidy._ Your home is where you keep your most prized possession - yourself. Therefore, you should make an effort to keep it nice and clean.
 
 **Precept Ten**: _Keep Your Weapon Sharp._ I make sure that my weapon, 'Life Ender', is kept well-sharpened at all times. This makes it much easier to cut things.
 
