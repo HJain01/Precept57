@@ -1,5 +1,6 @@
 ﻿using Modding;
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -42,17 +43,24 @@ namespace Precept57
             ModHooks.BeforeSceneLoadHook += ApplyLitterTax;
         }
 
+        private int numActiveGeo(string geoObjName)
+        {
+            GameObject[] geos = Resources.FindObjectsOfTypeAll<GameObject>()
+                    .Where(obj => obj.name.StartsWith(geoObjName))
+                    .Where(geo => geo.activeSelf)
+                    .ToArray<GameObject>();
+            return geos.Length;
+        }
+
         private string ApplyLitterTax(string new_scene)
         {
-            Scene scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
             if (Equipped())
             {
-                Log($"Scene: {scene.name}");
-                GameObject[] objs = scene.GetRootGameObjects();
-                foreach (GameObject obj in objs)
-                {
-                    Log($"Obj: {obj.name}");
-                }
+                int numSmallGeos = numActiveGeo("Geo Small(Clone)");
+                int numMediumGeos = numActiveGeo("Geo Med(Clone)");
+                int numLargeGeos = numActiveGeo("Geo Large(Clone)");
+                int tax = numSmallGeos + 5 * numMediumGeos + 25 * numLargeGeos;
+                Log($"LITTER TAX: {tax}");
             }
             return new_scene;
         }
