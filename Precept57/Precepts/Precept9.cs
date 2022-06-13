@@ -68,9 +68,12 @@ namespace Precept57
 
         private void ApplyLitterTax(Scene prevScene, Scene newScene)
         {
-            int player_geo = PlayerData.instance.GetInt("geo");
-            ItemChanger.GeoCost cost = new(tax < player_geo ? tax : player_geo);
-            cost.OnPay();
+            if (tax > 0)
+            {
+                int player_geo = PlayerData.instance.GetInt("geo");
+                ItemChanger.GeoCost cost = new(tax < player_geo ? tax : player_geo);
+                cost.OnPay();
+            }
         }
     }
 }
