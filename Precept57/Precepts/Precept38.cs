@@ -1,4 +1,6 @@
-﻿using Modding;
+﻿using GlobalEnums;
+using Modding;
+using UnityEngine;
 
 namespace Precept57
 { 
@@ -11,7 +13,7 @@ namespace Precept57
         public override string SpriteFileName => "Precept35.png";
         public override string Name => "Precept 38";
         public override string Id => "Precept_38";
-        public override string ShopDescription => "A mysterious force bears down on us from above, pushing us downwards. If you spend too long in the air, the force will crush you against the ground and destroy you. Beware!";
+        public override string ShopDescription => "If you spend too long in the air, the force will crush you against the ground and destroy you. Beware!";
         public override string Take => "Following";
         public override string Press => "Tap A";
         public override string DescOne => "Beware the Mysterious Force";
@@ -23,10 +25,18 @@ namespace Precept57
 
         public override PreceptSettings Settings(SaveSettings s) => s.Precept38;
 
-        private float FALL_DAMAGE_MIN_TIME = 0.0f;
-        private float FALL_DAMAGE_MAX_TIME = 0.0f;
-        private float _maxFallTime = 0.0f;
-        private bool _startFall = false;
+        /*
+         * Hard landings happen when fall timer > 1.1f (BIG_FALL_TIME).
+         * Some hard landings are forced (scene transitions) and are ignored
+         * if they are less than the fall timer limit. Falling from the top of
+         * the elevator shaft from Resting Grounds to City of Tears ~ 8.28
+         * fall time. Damage is scaled to take 8 masks of damage (1-max) after
+         * a fall time of 7.5
+         */
+        private float FALL_DAMAGE_MIN_TIME = 1.1f;
+        private float FALL_DAMAGE_MAX_TIME = 7.5f;
+        private int MAX_MASK_DAMAGE = 8;
+        private float _fallTimer;
 
         public override void Hook()
         {
@@ -35,24 +45,27 @@ namespace Precept57
 
         private void FallDamage()
         {
-            if (Equipped())
-            { 
-                if (HeroController.instance.cState.falling && HeroController.instance.cState.willHardLand)
-                {
-                    if (!_startFall)
-                        _startFall = true;
-                    if (HeroController.instance.fallTimer > _maxFallTime)
-                    {
-                        _maxFallTime = HeroController.instance.fallTimer;
-                    }
-                }
-                else if (_startFall) 
-                {
-                    Log("Fell for " + _maxFallTime + " time");
-                    _startFall = false;
-                    _maxFallTime = 0.0f;
-                }
+            if (!Equipped()) return;
+            if (HeroController.instance.fallTimer == 0f && _fallTimer > 0
+                && HeroController.instance.hero_state != ActorStates.airborne
+                && !HeroController.instance.cState.transitioning
+                && !HeroController.instance.cState.bouncing
+                && !HeroController.instance.cState.shroomBouncing
+                && !HeroController.instance.cState.spellQuake)
+            {
+                if (_fallTimer < FALL_DAMAGE_MIN_TIME)
+                    return;
+                var damage =
+                    Mathf.FloorToInt(((MAX_MASK_DAMAGE - 1) / (FALL_DAMAGE_MAX_TIME - FALL_DAMAGE_MIN_TIME)) * 
+                        (_fallTimer - FALL_DAMAGE_MAX_TIME) + MAX_MASK_DAMAGE);
+                if (damage >= PlayerData.instance.health)
+                    damage = PlayerData.instance.health - 1;
+                HeroController.instance.TakeDamage(null, GlobalEnums.CollisionSide.bottom, damage, 1);
+                Log("Fell for " + _fallTimer + "t & took " + damage + " masks");
+                _fallTimer = 0.0f;
             }
+
+            _fallTimer = HeroController.instance.fallTimer;
         }
     } 
 }

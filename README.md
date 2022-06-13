@@ -80,7 +80,7 @@ Precepts
 
 **Precept Thirty-Seven**: _Borrow, But Do Not Lend._ If you lend and are repayed, you gain nothing. If you borrow but do not repay, you gain everything.
 
-**Precept Thirty-Eight**: _Beware the Mysterious Force._ A mysterious force bears down on us from above, pushing us downwards. If you spend too long in the air, the force will crush you against the ground and destroy you. Beware!
+[**Precept Thirty-Eight**](PRECEPTS.md#precept-38): _Beware the Mysterious Force._ A mysterious force bears down on us from above, pushing us downwards. If you spend too long in the air, the force will crush you against the ground and destroy you. Beware!
 
 **Precept Thirty-Nine**: _Eat Quickly and Drink Slowly._ Your body is a delicate thing and you must fuel it with great deliberation. Food must go in as fast as possible, but fluids at a slower rate.
 
