@@ -31,17 +31,14 @@ namespace Precept57
 
         public override void Hook()
         {
-            ModHooks.SetPlayerBoolHook += AddText;
+            AddUpAndDownText();
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += DestroyText;
             ModHooks.SavegameLoadHook += AddTextAfterLoad;
         }
 
         private void AddTextAfterLoad(int obj)
         {
-            if (Equipped())
-            {
-                AddUpAndDownText();
-            }
+            AddUpAndDownText();
         }
 
         private void DestroyText(Scene arg0, Scene scene)
@@ -50,16 +47,6 @@ namespace Precept57
             {
                 Object.Destroy(canvas);
             }
-        }
-
-        private bool AddText(string name, bool orig)
-        {
-            if (name == Id && orig)
-            {
-                AddUpAndDownText();
-            }
-            
-            return orig;
         }
 
         private void AddUpAndDownText()

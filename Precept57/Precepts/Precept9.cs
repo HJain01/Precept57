@@ -57,26 +57,20 @@ namespace Precept57
 
         private string CalculateLitterTax(string new_scene)
         {
-            if (Equipped())
-            {
-                int numSmallGeos = numActiveGeo("Geo Small(Clone)");
-                int numMediumGeos = numActiveGeo("Geo Med(Clone)");
-                int numLargeGeos = numActiveGeo("Geo Large(Clone)");
-                tax = numSmallGeos + 5 * numMediumGeos + 25 * numLargeGeos;
-                Log($"LITTER TAX: {tax}");
+            int numSmallGeos = numActiveGeo("Geo Small(Clone)");
+            int numMediumGeos = numActiveGeo("Geo Med(Clone)");
+            int numLargeGeos = numActiveGeo("Geo Large(Clone)");
+            tax = numSmallGeos + 5 * numMediumGeos + 25 * numLargeGeos;
+            Log($"LITTER TAX: {tax}");
                 
-            }
             return new_scene;
         }
 
         private void ApplyLitterTax(Scene prevScene, Scene newScene)
         {
-            if (Equipped() && tax > 0)
-            {
-                int player_geo = PlayerData.instance.GetInt("geo");
-                ItemChanger.GeoCost cost = new(tax < player_geo ? tax : player_geo);
-                cost.OnPay();
-            }
+            int player_geo = PlayerData.instance.GetInt("geo");
+            ItemChanger.GeoCost cost = new(tax < player_geo ? tax : player_geo);
+            cost.OnPay();
         }
     }
 }

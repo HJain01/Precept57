@@ -15,7 +15,6 @@ namespace Precept57
         public abstract string Scene { get; }
         public abstract float X { get; }
         public abstract float Y { get; }
-        public bool Equipped() => PlayerData.instance.GetBool(Id);
         public abstract PreceptSettings Settings(SaveSettings s);
 
         public virtual void Hook() {}
