@@ -14,11 +14,13 @@ namespace Precept57
 {
     public class Precept57 : Mod, ILocalSettings<SaveSettings>
     {
-        private static readonly List<Precept> Precepts = new()
+        internal static readonly List<Precept> Precepts = new()
         {
             Precept9.Instance,
             Precept35.Instance
         };
+
+        internal Rando rando = new();
         
         private static Precept57 Instance;
 
@@ -51,6 +53,11 @@ namespace Precept57
             }
             DefineModHooks();
 
+            if (rando.IsInstalled())
+            {
+                rando.HookRandomizer();
+            }
+
             Log("Initialized Precept 57");
         }
         
@@ -58,7 +65,7 @@ namespace Precept57
         {
             ModHooks.GetPlayerBoolHook += GetPreceptBools;
             ModHooks.SetPlayerBoolHook += SetPreceptBools;
-            ModHooks.NewGameHook += PlacePreceptsAtFixedPositions;
+            ModHooks.NewGameHook += PlaceItems;
             ModHooks.LanguageGetHook += GetCharmStrings;
         }
 
@@ -126,19 +133,97 @@ namespace Precept57
             return orig;
         }
 
+        private void PlaceItems()
+        {
+            // var locations = CreateLocations();
+            // var placements = CreatePlacements();
+            ItemChangerMod.CreateSettingsProfile(overwrite: false, createDefaultModules: false);
+            if (rando.IsActive())
+            {
+                PlaceItemsRando();
+            }
+            else
+            {
+                PlacePreceptsAtFixedPositions();
+            }
+        }
+        
+        // private List<CoordinateLocation> CreateLocations()
+        // {
+        //     var locations = new List<CoordinateLocation>();
+        //     foreach (var precept in Precepts)
+        //     {
+        //         var loc = new CoordinateLocation()
+        //             { x = precept.X, y = precept.Y, elevation = 0, sceneName = precept.Scene, name = precept.Id };
+        //         locations.Add(loc);
+        //         Finder.DefineCustomLocation(loc);
+        //     }
+        //     
+        //     return locations;
+        // }
+
+        private CoordinateLocation CreateLocation(Precept precept)
+        {
+            var loc = new CoordinateLocation()
+            {
+                x = precept.X,
+                y = precept.Y,
+                elevation = 0,
+                sceneName = precept.Scene,
+                name = precept.Id
+            };
+            
+            Finder.DefineCustomLocation(loc);
+
+            return loc;
+        }
+
+        private void PlaceItemsRando()
+        {
+            if (!rando.IsActive())
+            {
+                // var placements = CreatePlacements();
+                PlacePreceptsAtFixedPositions();
+            }
+        }
+
+        // private List<AbstractPlacement> CreatePlacements()
+        // {
+        //     var placements = new List<AbstractPlacement>();
+        //     foreach (var precept in Precepts)
+        //     {
+        //         var name = precept.Id;
+        //         var loc = Finder.GetLocation(name);
+        //         placements.Add(
+        //             loc
+        //                 .Wrap());
+        //     }
+        //     // ItemChangerMod.AddPlacements(placements, conflictResolution: PlacementConflictResolution.Ignore);
+        //
+        //     return placements;
+        // }
+
+        // private void PlacePreceptsAtFixedPositions(List<AbstractPlacement> placements)
         private void PlacePreceptsAtFixedPositions()
         {
-            ItemChangerMod.CreateSettingsProfile(overwrite: false, createDefaultModules: false);
 
             var placements = new List<AbstractPlacement>();
             foreach (var precept in Precepts)
             {
                 var name = precept.Id;
+                // placements.Add(
+                //     new CoordinateLocation() { x = precept.X, y = precept.Y, elevation = 0, sceneName = precept.Scene, name = name }
+                //         .Wrap()
+                //         .Add(Finder.GetItem(name)));
                 placements.Add(
-                    new CoordinateLocation() { x = precept.X, y = precept.Y, elevation = 0, sceneName = precept.Scene, name = name }
+                    CreateLocation(precept)
                         .Wrap()
-                        .Add(Finder.GetItem(name)));
+                        .Add(Finder.GetItem(precept.Id)));
             }
+            // foreach (var placement in placements)
+            // {
+            //     placement.Add(Finder.GetItem(placement.Name));
+            // }
             ItemChangerMod.AddPlacements(placements, conflictResolution: PlacementConflictResolution.Ignore);
         }
         
