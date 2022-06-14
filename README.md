@@ -104,7 +104,7 @@ Precepts
 
 **Precept Forty-Nine**: _Statues are Meaningless._ Do not honour them! No one has ever made a statue of you or I, so why should we pay them any attention?
 
-**Precept Fifty**: _Don_t Linger on Mysteries'. Some things in this world appear to us as puzzles. Or enigmas. If the meaning behind something is not immediately evident though, don't waste any time thinking about it. Just move on.
+**Precept Fifty**: _Don't Linger on Mysteries_. Some things in this world appear to us as puzzles. Or enigmas. If the meaning behind something is not immediately evident though, don't waste any time thinking about it. Just move on.
 
 **Precept Fifty-One**: _Nothing is Harmless._ Given the chance, everything in this world will hurt you. Friends, foes, monsters, uneven paths. Be suspicious of them all.
 

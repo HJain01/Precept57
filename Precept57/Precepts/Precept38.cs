@@ -31,11 +31,10 @@ namespace Precept57
          * if they are less than the fall timer limit. Falling from the top of
          * the elevator shaft from Resting Grounds to City of Tears ~ 8.28
          * fall time. Damage is scaled to take 8 masks of damage (1-max) after
-         * a fall time of 7.5
+         * a fall time of 7
+         * Equation: https://www.desmos.com/calculator/uvygbscjot
          */
         private float FALL_DAMAGE_MIN_TIME = 1.1f;
-        private float FALL_DAMAGE_MAX_TIME = 7.5f;
-        private int MAX_MASK_DAMAGE = 8;
         private float _fallTimer;
 
         public override void Hook()
@@ -55,13 +54,11 @@ namespace Precept57
             {
                 if (_fallTimer < FALL_DAMAGE_MIN_TIME)
                     return;
-                var damage =
-                    Mathf.FloorToInt(((MAX_MASK_DAMAGE - 1) / (FALL_DAMAGE_MAX_TIME - FALL_DAMAGE_MIN_TIME)) * 
-                        (_fallTimer - FALL_DAMAGE_MAX_TIME) + MAX_MASK_DAMAGE);
-                if (damage >= PlayerData.instance.health)
-                    damage = PlayerData.instance.health - 1;
+                var damage = Mathf.FloorToInt(5.5f * Mathf.Sqrt(0.5f * _fallTimer - 0.25f) - 1.9f);
+                if (damage >= PlayerData.instance.health + PlayerData.instance.healthBlue)
+                    damage = PlayerData.instance.health + PlayerData.instance.healthBlue - 1;
                 HeroController.instance.TakeDamage(null, GlobalEnums.CollisionSide.bottom, damage, 1);
-                Log("Fell for " + _fallTimer + "t & took " + damage + " masks");
+                Log("Fell for " + _fallTimer + "s & took " + damage + " masks");
                 _fallTimer = 0.0f;
             }
 
