@@ -19,9 +19,10 @@ namespace Precept57
         public override string DescOne => "Beware the Mysterious Force";
 
         public override string DescTwo => "You now take damage after significant falls.";
-        public override string Scene => "Tutorial_01";
-        public override float X => 45.5f;
-        public override float Y => 11.4f;
+        // after Soul Master fight (& getting Desolate Dive)
+        public override string Scene => "Ruins1_32";
+        public override float X => 37.2f;
+        public override float Y => 65.5f;
 
         public override PreceptSettings Settings(SaveSettings s) => s.Precept38;
 
@@ -58,7 +59,7 @@ namespace Precept57
                 if (damage >= PlayerData.instance.health + PlayerData.instance.healthBlue)
                     damage = PlayerData.instance.health + PlayerData.instance.healthBlue - 1;
                 HeroController.instance.TakeDamage(null, GlobalEnums.CollisionSide.bottom, damage, 1);
-                Log("Fell for " + _fallTimer + "s & took " + damage + " masks");
+                LogDebug("Fell for " + _fallTimer + "s & took " + damage + " masks");
                 _fallTimer = 0.0f;
             }
 
