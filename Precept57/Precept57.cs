@@ -1,6 +1,7 @@
 ﻿using Modding;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UObject = UnityEngine.Object;
 using ItemChanger;
@@ -15,7 +16,8 @@ namespace Precept57
     {
         private static readonly List<Precept> Precepts = new()
         {
-            Precept35.Instance,
+            Precept9.Instance,
+            Precept35.Instance
             Precept38.Instance,
         };
         
@@ -30,7 +32,7 @@ namespace Precept57
         {
         }
         
-        public override string GetVersion() => "0.0.1";
+        public override string GetVersion() => "0.0.2";
 
         private SaveSettings saveSettings = new();
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects) {
@@ -46,8 +48,6 @@ namespace Precept57
                 Func<SaveSettings, PreceptSettings> settings = precept.Settings;
                 PopulateHookDictionaries(precept, settings);
 
-                precept.Hook();
-                
                 var preceptItem = CreatePrecept(precept, sprite);
                 ConfigureMapMod(preceptItem);
             }
@@ -119,9 +119,11 @@ namespace Precept57
         
         private bool SetPreceptBools(string name, bool orig)
         {
-            if (BoolSetters.TryGetValue(name, out var f))
+            var precept = Precepts.FirstOrDefault(precept => precept.Id == name);
+            if (BoolSetters.TryGetValue(name, out var f) && precept != null)
             {
                 f(orig);
+                precept.Hook();
             }
             return orig;
         }
