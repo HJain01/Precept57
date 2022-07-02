@@ -45,7 +45,6 @@ namespace Precept57
 
         private void FallDamage()
         {
-            if (!Equipped()) return;
             if (HeroController.instance.fallTimer == 0f && _fallTimer > 0
                 && HeroController.instance.hero_state != ActorStates.airborne
                 && !HeroController.instance.cState.transitioning
