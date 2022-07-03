@@ -16,6 +16,7 @@ namespace Precept57
     {
         private static readonly List<Precept> Precepts = new()
         {
+            Precept2.Instance,
             Precept9.Instance,
             Precept35.Instance
         };
