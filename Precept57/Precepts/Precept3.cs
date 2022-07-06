@@ -38,19 +38,37 @@ namespace Precept57
 
         public override PreceptSettings Settings(SaveSettings s) => s.Precept3;
 
+        private PlayMakerFSM _benchFsm;
 
         public override void Hook()
         {
             ModHooks.SceneChanged += UpdateBench;
+            ModHooks.SetPlayerBoolHook += RestAtBench;
         }
 
-        private static void UpdateBench(string obj)
+        private void UpdateBench(string obj)
         {
             var bench = GameObject.Find("_Props/RestBench");
-            if (bench == null) return;
+            if (bench == null)
+            {
+                _benchFsm = null;
+                return;
+            }
             var hitbox = bench.GetComponent<BoxCollider2D>();
-            hitbox.size = new Vector2(10f, 1f);
+            hitbox.size = new Vector2(8f, 6f);
+            hitbox.offset = new Vector2(0f, 3f);
+            _benchFsm = FSMUtility.LocateFSM(bench, "Bench Control");
         }
 
+        private bool RestAtBench(string name, bool value)
+        {
+            if (_benchFsm == null) return value;
+            if (name == "nearBench" && value && !_benchFsm.FsmVariables.GetFsmBool("RespawnResting").Value)
+            {
+                _benchFsm.SendEvent("UP PRESSED");
+            }
+
+            return value;
+        }
     }
 }
