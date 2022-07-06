@@ -38,7 +38,7 @@ namespace Precept57
 
         public override float Y => 11.4f;
 
-        public override PreceptSettings Settings(SaveSettings s) => s.Precept9;
+        public override PreceptSettings Settings(SaveSettings s) => s.Precept2;
 
         //private GameObject _precept2;
         private AudioSource _laugh;
