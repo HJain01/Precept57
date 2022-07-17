@@ -80,7 +80,7 @@ Precepts
 
 **Precept Thirty-Seven**: _Borrow, But Do Not Lend._ If you lend and are repayed, you gain nothing. If you borrow but do not repay, you gain everything.
 
-**Precept Thirty-Eight**: _Beware the Mysterious Force._ A mysterious force bears down on us from above, pushing us downwards. If you spend too long in the air, the force will crush you against the ground and destroy you. Beware!
+[**Precept Thirty-Eight**](PRECEPTS.md#precept-38): _Beware the Mysterious Force._ A mysterious force bears down on us from above, pushing us downwards. If you spend too long in the air, the force will crush you against the ground and destroy you. Beware!
 
 **Precept Thirty-Nine**: _Eat Quickly and Drink Slowly._ Your body is a delicate thing and you must fuel it with great deliberation. Food must go in as fast as possible, but fluids at a slower rate.
 
@@ -104,7 +104,7 @@ Precepts
 
 **Precept Forty-Nine**: _Statues are Meaningless._ Do not honour them! No one has ever made a statue of you or I, so why should we pay them any attention?
 
-**Precept Fifty**: _Don_t Linger on Mysteries'. Some things in this world appear to us as puzzles. Or enigmas. If the meaning behind something is not immediately evident though, don't waste any time thinking about it. Just move on.
+**Precept Fifty**: _Don't Linger on Mysteries_. Some things in this world appear to us as puzzles. Or enigmas. If the meaning behind something is not immediately evident though, don't waste any time thinking about it. Just move on.
 
 **Precept Fifty-One**: _Nothing is Harmless._ Given the chance, everything in this world will hurt you. Friends, foes, monsters, uneven paths. Be suspicious of them all.
 
